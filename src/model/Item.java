@@ -21,19 +21,30 @@ public class Item {
     public String getName() { return name; }
     public String getCategory() { return category; }
     public double getPrice() { return price; }
-
     public int getAvailableQuantity() { return availableQuantity; }
     public int getMinimumQuantity() { return minimumQuantity; }
 
     public void setAvailableQuantity(int qty) { this.availableQuantity = qty; }
-
     public void addQuantity(int qty) { this.availableQuantity += qty; }
-
     public boolean consumeQuantity(int qty) {
-        if (availableQuantity >= qty) {
-            availableQuantity -= qty;
-            return true;
-        }
+        if (availableQuantity >= qty) { availableQuantity -= qty; return true; }
         return false;
+    }
+
+    // ===== التخزين =====
+    public String toFileString() {
+        return id + "," + name + "," + category + "," + price + "," + availableQuantity + "," + minimumQuantity;
+    }
+
+    public static Item fromFileString(String line) {
+        String[] parts = line.split(",");
+        return new Item(
+                Integer.parseInt(parts[0]),
+                parts[1],
+                parts[2],
+                Double.parseDouble(parts[3]),
+                Integer.parseInt(parts[4]),
+                Integer.parseInt(parts[5])
+        );
     }
 }
